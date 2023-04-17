@@ -135,6 +135,7 @@ struct CarEvent @0x9b1657f34caf3ad3 {
 
     torqueNNFFLoadSuccess @135;
     torqueNNFFNotLoaded @136;
+    autoHoldActivated @137;
 
     radarCanErrorDEPRECATED @15;
     communityFeatureDisallowedDEPRECATED @62;
@@ -240,6 +241,8 @@ struct CarState {
   gapAdjustCruiseTr @55 :Int32;
   endToEndLong @56 :Bool;
   customStockLong @57 :CustomStockLong;
+
+  autoHoldActivated @58 :Bool;
 
   struct CustomStockLong {
     cruiseButton @0 :Int16;
