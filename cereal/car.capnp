@@ -133,6 +133,9 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     cruiseEngageBlocked @133;
     laneChangeRoadEdge @134;
 
+    torqueNNFFLoadSuccess @135;
+    torqueNNFFNotLoaded @136;
+
     radarCanErrorDEPRECATED @15;
     communityFeatureDisallowedDEPRECATED @62;
     radarCommIssueDEPRECATED @67;
