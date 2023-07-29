@@ -401,8 +401,8 @@ class CarInterfaceBase(ABC):
         events.add(EventName.silentBrakeHold)
     if cs_out.parkingBrake:
       events.add(EventName.parkBrake)
-    if cs_out.accFaulted:
-      events.add(EventName.accFaulted)
+    # if cs_out.accFaulted:
+    #   events.add(EventName.accFaulted)
     if cs_out.steeringPressed:
       events.add(EventName.steerOverride)
 
