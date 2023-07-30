@@ -25,7 +25,7 @@ from system.swaglog import cloudlog
 
 LOW_SPEED_X = [0, 10, 20, 30]
 LOW_SPEED_Y = [15, 13, 10, 5]
-LOW_SPEED_Y_NNFF = [7, 4, 2, 0]
+LOW_SPEED_Y_NNFF = LOW_SPEED_Y
 
 class LatControlTorque(LatControl):
   def __init__(self, CP, CI):
