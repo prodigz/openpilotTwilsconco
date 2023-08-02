@@ -113,15 +113,16 @@ class LatControlTorque(LatControl):
         # prepare future roll, lat accel, and lat accel error
         adjusted_future_times = [t + 0.5*CS.aEgo*(t/max(CS.vEgo, 1.0)) for t in self.nnff_future_times]
         future_rolls = [interp(t, T_IDXS, model_data.orientation.x) + roll for t in adjusted_future_times]
+        
+        nnff_measurement_input = [CS.vEgo, measurement, 0.05 * actual_lateral_jerk, roll] \
+                              + [measurement] * self.past_future_len \
+                              + past_rolls + future_rolls
+        torque_from_measurement = self.torque_from_nn(nnff_measurement_input)
         if lat_plan.curvatures[0] == self.curvature_0_last:
           # use old state but update error based on updated measured state
           ff = self.ff
           
           # update error using old setpoint
-          nnff_measurement_input = [CS.vEgo, measurement, 0.05 * actual_lateral_jerk, roll] \
-                                + [measurement] * self.past_future_len \
-                                + past_rolls + future_rolls
-          torque_from_measurement = self.torque_from_nn(nnff_measurement_input)
           pid_log.error = self.torque_from_setpoint - torque_from_measurement
         else:
           self.curvature_0_last = lat_plan.curvatures[0]
@@ -136,12 +137,7 @@ class LatControlTorque(LatControl):
           nnff_setpoint_input = [CS.vEgo, setpoint, 0.05 * desired_lateral_jerk, roll] \
                                 + [setpoint] * self.past_future_len \
                                 + past_rolls + future_rolls
-          # past lateral accel error shouldn't count, so use past desired like the setpoint input
-          nnff_measurement_input = [CS.vEgo, measurement, 0.05 * actual_lateral_jerk, roll] \
-                                + [measurement] * self.past_future_len \
-                                + past_rolls + future_rolls
           self.torque_from_setpoint = self.torque_from_nn(nnff_setpoint_input)
-          torque_from_measurement = self.torque_from_nn(nnff_measurement_input)
           pid_log.error = self.torque_from_setpoint - torque_from_measurement
 
           # compute feedforward (same as nnff setpoint output)
