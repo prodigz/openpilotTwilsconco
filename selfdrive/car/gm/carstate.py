@@ -28,7 +28,7 @@ class CarState(CarStateBase):
     self.buttons_counter = 0
     
     self.regenPaddlePressed = False
-    self.autoHold = False
+    self.autoHold = CP.carFingerprint == CAR.VOLT
     self.autoHoldActive = False
     self.autoHoldActivated = False
     self.lastAutoHoldTime = 0.0
